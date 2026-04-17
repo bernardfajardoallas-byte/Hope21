@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💜</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #e6ccff, #d8b3ff);
+    color: #4b2e83;
+    text-align: center;
+    overflow-x: hidden;
+
+    opacity: 0;
+    transform: scale(1.05);
+    animation: intro 1.5s ease forwards;
+}
+
+@keyframes intro {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =======================
+   GIFT (REALISTIC SETUP)
+======================= */
+.gift-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0;
+    margin-top: 50px;
+}
+
+.bouquet {
+    width: 300px;
+    z-index: 1;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.25));
+    animation: bloom 3s ease-in-out infinite;
+}
+
+.cake-container {
+    position: relative;
+    margin-left: -60px;
+    margin-bottom: 10px;
+    z-index: 2;
+}
+
+.cake-img {
+    width: 250px;
+    animation: zoomCake 2s ease-in-out infinite;
+}
+
+.cake-container::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 20px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 50%;
+    filter: blur(8px);
+}
+
+.flame {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 28px;
+
+    background: radial-gradient(circle at 30% 30%, 
+        #fff4b0,
+        #ffb300,
+        #ff6a00,
+        #ff2a00
+    );
+
+    border-radius: 50% 50% 50% 50%;
+    filter: blur(0.3px);
+    animation: flameFlicker 0.15s infinite alternate;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+}
+
+/* inner glow effect */
+.flame::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 3px;
+    width: 8px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+/* realistic flicker */
+@keyframes flameFlicker {
+    0% {
+        transform: translateX(-50%) scale(1) rotate(-2deg);
+    }
+    100% {
+        transform: translateX(-50%) scale(1.15) rotate(2deg);
+    }
+}
+
+/* ANIMATIONS */
+@keyframes bloom {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes glow {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.2); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+@keyframes zoomCake {
+    0%, 100% {
+        transform: scale(1) translateY(0px);
+    }
+    50% {
+        transform: scale(1.05) translateY(-6px);
+    }
+}
+
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 180px); /* 3 columns, bigger */
+    gap: 18px;
+
+    justify-content: center;
+    padding: 30px;
+    margin: 0 auto;
+}
+
+.gallery img {
+    width: 180px;
+    height: 230px; /* portrait shape */
+    object-fit: cover;
+
+    border-radius: 18px;
+    transition: 0.3s;
+
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+.gallery img:hover {
+    transform: scale(1.08);
+}
+
+/* =======================
+   🎥 3D CAROUSEL
+======================= */
+
+.carousel-3d {
+    position: relative;
+    width: 480px;   /* ⬅️ bigger container */
+    height: 480px;
+    margin: 60px auto;
+
+    transform-style: preserve-3d;
+    animation: rotate3D 20s linear infinite;
+}
+
+/* 3D rotation */
+@keyframes rotate3D {
+    from {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+    to {
+        transform: perspective(1000px) rotateY(360deg);
+    }
+}
+
+/* each video panel */
+.carousel-item {
+    position: absolute;
+    width: 180px;   /* ⬅️ bigger videos */
+    height: 180px;
+    top: 150px;     /* ⬅️ center adjusted */
+    left: 150px;
+
+    transform-style: preserve-3d;
+}
+
+/* spread wider in 3D space */
+.carousel-item:nth-child(1) { transform: rotateY(0deg) translateZ(240px); }
+.carousel-item:nth-child(2) { transform: rotateY(60deg) translateZ(240px); }
+.carousel-item:nth-child(3) { transform: rotateY(120deg) translateZ(240px); }
+.carousel-item:nth-child(4) { transform: rotateY(180deg) translateZ(240px); }
+.carousel-item:nth-child(5) { transform: rotateY(240deg) translateZ(240px); }
+.carousel-item:nth-child(6) { transform: rotateY(300deg) translateZ(240px); }
+
+.carousel-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: mediumpurple;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+section {
+    padding: 120px 20px;   /* creates big scroll space */
+    margin-bottom: 80px;   /* space between sections */
+}
+
+/* optional: makes each section feel like a "page" */
+section h2 {
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+/* adds soft separation feel */
+section:not(:last-child) {
+    border-bottom: 1px solid rgba(75, 46, 131, 0.1);
+}
+
+
+.top-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap; /* mobile friendly */
+    padding: 40px 20px;
+}
+
+/* make both sides balanced */
+.gift-box,
+.music-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    margin: 0 auto;
+    text-align: center;
+}
+
+.music-box iframe {
+    display: block;
+    margin: 0 auto;
+
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.music-btn {
+    margin-top: 12px;
+    padding: 10px 20px;
+    background: mediumpurple;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.music-caption {
+    margin-top: 15px;
+    font-size: 15px;
+    color: #4b2e83;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.envelope {
+  width: 460px;   /* ⬅️ bigger */
+  height: 300px;  /* ⬅️ taller */
+  margin: 80px auto;
+  position: relative;
+  cursor: pointer;
+  perspective: 1400px;
+}
+
+/* BODY */
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #6a0dad, #b57bff);
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+}
+
+/* FLAP */
+.envelope-flap {
+  position: absolute;
+  inset: 0;
+  background: #8b3dff;
+  clip-path: polygon(0 0, 50% 55%, 100% 0);
+  transform-origin: top;
+  transition: transform 1s cubic-bezier(.2,.9,.2,1);
+  border-radius: 18px;
+  z-index: 3;
+}
+
+/* LETTER PAPER (MORE SPACE + SMOOTH SCROLL) */
+.letter-paper {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) translateY(160px);
+
+  width: 92%;              /* ⬅️ wider */
+  max-height: 420px;       /* ⬅️ taller for long message */
+
+  background: white;
+  border-radius: 14px;
+  padding: 28px;           /* ⬅️ more breathing space */
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+
+  opacity: 0;
+  overflow-y: auto;        /* ✅ scroll works smoothly */
+  transition: all 1s cubic-bezier(.2,.9,.2,1);
+  z-index: 2;
+}
+
+.letter-paper p {
+  text-align: justify;
+  line-height: 1.9;
+}
+
+.signature {
+    margin-top: 25px;
+    font-weight: 700;
+    color: #7b3fcf;
+
+    text-align: left;
+    padding-left: 2px;
+}
+
+/* OPEN STATE */
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.envelope.open .letter-paper {
+  transform: translateX(-50%) translateY(-60px); /* ⬅️ smoother pull-out */
+  opacity: 1;
+}
+/* make sure letter is above */
+.letter-paper {
+  z-index: 3;
+}
+
+/* flap default */
+.envelope-flap {
+  z-index: 2;
+  backface-visibility: hidden; /* prevents weird overlap */
+}
+
+/* when opened → send flap behind */
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1; /* ⬅️ goes behind the paper */
+}
+
+@keyframes pullPaper {
+  0% {
+    transform: translateX(-50%) translateY(80px);
+    opacity: 0;
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(10px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-60px);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   🔥 NON-DESTRUCTIVE RESPONSIVE FIX
+   (overrides only)
+========================= */
+
+/* prevent overflow everywhere */
+body {
+    overflow-x: hidden;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   📸 GALLERY (auto adjust)
+========================= */
+@media (max-width: 900px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .gallery img {
+        width: 100% !important;
+        height: 200px !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .gallery {
+        grid-template-columns: 1fr !important;
+    }
+
+    .gallery img {
+        height: 230px !important;
+    }
+}
+
+/* =========================
+   🎥 CAROUSEL SCALE
+========================= */
+@media (max-width: 900px) {
+
+    .carousel-3d {
+        width: 90vw !important;
+        height: 90vw !important;
+        max-width: 400px;
+        max-height: 400px;
+    }
+
+    .carousel-item {
+        width: 35% !important;
+        height: 35% !important;
+        top: 32% !important;
+        left: 32% !important;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .carousel-3d {
+        width: 260px !important;
+        height: 260px !important;
+    }
+
+    .carousel-item {
+        width: 90px !important;
+        height: 90px !important;
+        top: 85px !important;
+        left: 85px !important;
+    }
+}
+
+/* =========================
+   💌 ENVELOPE FIX
+========================= */
+@media (max-width: 768px) {
+
+    .envelope {
+        width: 90vw !important;
+        height: auto !important;
+        min-height: 240px;
+    }
+
+    .letter-paper {
+        width: 95% !important;
+        max-height: 60vh !important;
+        padding: 20px !important;
+    }
+}
+
+/* =========================
+   🎁 GIFT STACK FIX
+========================= */
+@media (max-width: 768px) {
+
+    .gift-container {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .bouquet {
+        width: 220px !important;
+    }
+
+    .cake-img {
+        width: 180px !important;
+    }
+
+    .cake-container {
+        margin-left: 0 !important;
+    }
+}
+
+/* =========================
+   🎵 MUSIC RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+    .music-box iframe {
+        width: 100% !important;
+        height: 200px !important;
+    }
+}
+
+/* 🎉 HERO BIRTHDAY SECTION */
+.hero-birthday {
+    position: relative;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    text-align: center; /* ✅ ensures text is centered */
+
+    background: linear-gradient(135deg, #b57bff, #e6ccff);
+    overflow: hidden;
+}
+
+.hero-birthday h1 {
+    font-size: clamp(32px, 6vw, 60px); /* ✅ responsive center text */
+    color: white;
+    text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    animation: pop 1.5s ease;
+    margin: 0;
+}
+
+.hero-birthday p {
+    font-size: clamp(16px, 3vw, 20px);
+    color: #fff;
+    margin-top: 10px;
+}
+
+/* confetti pieces */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    top: -10px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+@keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🎉 BIG BIRTHDAY INTRO -->
+<section class="hero-birthday">
+
+    <h1>🎉 Happy Birthday My Love 💜</h1>
+    <p>You deserve all the happiness in the world ✨</p>
+
+</section>
+
+<!-- BACK BUTTON -->
+<div style="text-align:center; margin: 60px 0;">
+    <button onclick="goBack()" style="
+        padding: 12px 25px;
+        font-size: 16px;
+        background: mediumpurple;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+    ">
+        ⬅ Back to First Page
+    </button>
+</div>
+
+<!-- GIFT + MUSIC SIDE BY SIDE -->
+<section>
+    <h2>🌷 A Gift For You 💜</h2>
+
+    <div class="gift-container">
+        <img src="download.png" class="bouquet" alt="Tulip Bouquet">
+
+        <div class="cake-container">
+            <img src="cake.png" class="cake-img" alt="Cake">
+            <div class="flame"></div>
+        </div>
+    </div>
+</section>  
+
+    <!-- MUSIC -->
+    <section class="music-section">
+    <h2>🎵 This song reminds me of us</h2>
+
+    <div class="music-box">
+        <iframe
+         width="360"
+         height="215"
+         src="https://www.youtube.com/embed/-8Pu9dypdhw"
+         title="YouTube music player"
+         frameborder="0"
+         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+         allowfullscreen>
+        </iframe>
+
+        <p class="music-caption">
+    This song is one of my favorites because it reminds me of where we are started.  
+    Every time I listen to it, I remember the moments of our relationship from the beginning until now.💜
+</p>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section>
+    <h2>📸 Our Memories</h2>
+
+    <div class="gallery">
+        <img src="photo1.JPG">
+        <img src="photo2.JPG">
+        <img src="photo3.JPG">
+        <img src="photo8.jpg">
+        <img src="photo5.jpg">
+        <img src="photo6.jpg">
+        <img src="photo9.JPG">
+        <img src="photo4.jpg">
+        <img src="photo11.JPG">
+        <img src="photo13.JPG">
+        <img src="photo10.jpeg">
+        <img src="photo12.JPG">
+        <img src="photo14.JPG">
+        <img src="photo15.JPG">
+        <img src="photo16.JPG">
+        <img src="photo20.JPG">
+        <img src="photo7.jpg">
+        <img src="photo21.JPG">
+        <img src="photo17.JPG">
+        <img src="photo19.JPG">
+        <img src="photo18.JPG">
+        <img src="photo22.JPG">
+        <img src="photo23.JPG">
+        <img src="photo24.JPG">
+        <img src="photo25.JPG">
+        <img src="photo26.JPG">
+        <img src="photo27.JPG">
+        <img src="photo28.JPG">
+        <img src="photo29.JPG">
+        <img src="photo30.JPG">
+        <img src="photo31.JPG">
+        <img src="photo33.jpeg">
+        <img src="photo32.JPG">
+        <img src="photo34.JPG">
+        <img src="photo35.JPG">
+        <img src="photo36.JPG">
+        <img src="photo37.jpeg">
+        <img src="photo38.jpeg">
+        <img src="photo39.jpeg">
+        <img src="photo40.jpeg">
+        <img src="photo41.jpeg">
+        <img src="photo42.jpeg">
+        <img src="photo43.jpeg">
+        <img src="photo44.jpeg">
+        <img src="photo45.jpeg">
+        <img src="photo46.jpeg">
+        <img src="photo47.jpeg">
+        <img src="photo48.JPG">
+        <img src="photo49.JPG">
+        <img src="photo50.JPG">
+        <img src="photo51.jpg">
+    </div>
+</section>
+
+<!-- 🎥 3D VIDEO CAROUSEL -->
+<section>
+    <h2>🎥 Our Moving Memories</h2>
+
+    <div class="carousel-3d">
+
+        <div class="carousel-item">
+            <video src="vid1.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <div class="carousel-item">
+            <video src="vid2.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <div class="carousel-item">
+            <video src="vid3.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <div class="carousel-item">
+            <video src="vid4.mov" autoplay loop muted playsinline></video>
+        </div>
+
+        <div class="carousel-item">
+            <video src="vid5.MOV" autoplay loop muted playsinline></video>
+        </div>
+
+        <div class="carousel-item">
+            <video src="vid6.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+    </div>
+</section>
+
+<!-- 💌 ENVELOPE LETTER -->
+<section>
+    <h2>💌 A Letter for You</h2>
+
+    <div class="envelope" id="envelope" onclick="toggleEnvelope()">
+
+        <div class="envelope-body"></div>
+        <div class="envelope-flap"></div>
+
+        <div class="letter-paper">
+            <h3>💜 My Love</h3>
+
+            <p>
+Happy Birthday, my love. I love you more than words can express. You are my happiness, my peace, my resting place when my feelings are heavy, and my forever. This letter is just a small reminder from the bottom of my heart that you mean everything to me, chanyan, I just want you to know how much I love you. Thank you for being my safe place, my laughter on bad days kasi ikaw ang palagi kong gusto puntahan o lapitan pag magulo na, and my constant support. Every little thing you do and every word you say makes me fall for you even more. You make my world brighter, my heart fuller, and my days better just by being there. Thank you for your never-ending love and understanding.
+</p>
+
+<p>
+All I want is to make you happy and remind you that you're never alone. I want you to feel safe with me, loved, and comfortable enough to be yourself kaya nga gustong gusto ko pag nagsasabi ka sakin agad. On the days when things feel heavy and your eyes fill with tears, I want you to know you can always come to me. I'll be here to hold you and stay with you until things feel a little better. I love you on your best days and on your hardest ones too, and nothing will ever change that. What we have is real and rare, the kind of love that people don't find easily kaya I'm so thankful nung nakilala kita and hanggang ngayon kasi tinanggap mo kung sino ako simula nung umpisa at hanggang ngayon. You mean so much to me-more than words can really explain. I'm here, and I'll keep choosing you every single day. I'm not going anywhere. Being with you feels like home to me. You're my safe place and the love of my life. When I say I'd do anything for you, I truly mean it. Kaya kahit wala man akong maibigay muna sayong regalo ngayon sana magustuhan mo itong ginawa ko para sayo, habang ginagawa ko ito kinikilig na ako agad hindi ko alam kung bakit, pero siguro dahil gusto ko yung ginagawa ko dahil para sayo naman eh kahit hindi ako magaling magcode sinubukan ko kaya rin siguro ako kinikilig kasi kapag naaayos ko yung mga errors tapos napapagana ko mga nasa isip ko, kaya ito yung result sana magustuhan mo. I love you now, and I'll love you always. No matter what comes our way, I believe we'll be okay as long as we keep choosing each other. And I will always choose you.
+</p>
+
+<p>
+I think it's the right time na rin naman siguro para magsorry sa mga time na nagsasagutan at hindi tayo okay I feel guilty because I want to be an understanding boyfriend, but sometimes I can't control my mood, emotions, silence, or anger when you do something that triggers me. Please know that I'm trying my best. I never mean to hurt you or make you irritated, even when I shut down or react harshly. It's just that sometimes, my emotions get too heavy, and I struggle to express what I truly feel. I see your efforts, and I deeply appreciate your patience, even when I'm not at my best. I love you, and that love is what keeps me trying every day to be better for you, for me, and for us please sana wag kang mapapagod na maging understanding.
+</p>
+
+<p>
+Let me show you that you are worth every risk. Even if we're still young, I'm willing to risk everything for you, no matter what happens. I want to prove to you that you're my one and only, that no matter what we go through, I'll always be here for you. My love for you will never fade. You're the only girl I love, and I'll do everything I can to understand you-your moods, your attitude, your ups and downs. Even if I get tired, I won't walk away. I won't give up on you. Ι promise to treat you better than anyone ever has, because you deserve nothing less. You make the world feel less scary, just by being in it; with you everything feels softer, lighter, and a little more like home. I'm here for the long run- not just for the good moments, but for every storm too. I see the parts of you you tried to hide- your fears, your wounds, your softness- and I love you even more because of them. You don't have to pretend with me. You can fall apart, breakdown, cry, and I'll still choose you every time. Again, happy birthday, enjoy your day and don't forget to rest. I love you always, in all ways.
+</p>
+
+<p class="signature">
+    — Ian
+</p>
+
+        </div>
+    </div>
+</section>
+
+<script>
+function goBack() {
+    window.location.href = "index.html";
+}
+
+function toggleEnvelope() {
+  document.getElementById("envelope").classList.toggle("open");
+}
+
+/* 🎉 CONFETTI GENERATOR */
+function createConfetti() {
+    const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2", "#c77dff"];
+
+    for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        confetti.style.opacity = Math.random();
+
+        document.body.appendChild(confetti);
+    }
+}
+
+createConfetti();
+
+window.addEventListener("click", () => {
+    document.getElementById("bgmusic").play();
+}, { once: true });
+</script>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love 💜</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #e6ccff, #d8b3ff);
+    text-align: center;
+    color: #4b2e83;
+    overflow-x: hidden;
+}
+
+/* GLOBAL FLEXIBILITY */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* HEADER */
+header {
+    padding: clamp(40px, 8vw, 60px) 20px;
+    background: rgba(147, 112, 219, 0.85);
+    color: white;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+
+/* SLIDESHOW */
+.slideshow-container {
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    position: relative;
+}
+
+.slide {
+    display: none;
+}
+
+.slide img {
+    width: 100%;
+    height: clamp(220px, 45vw, 350px);
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.active {
+    display: block;
+}
+
+/* LETTER */
+.letter {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: clamp(16px, 4vw, 24px);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.letter:hover {
+    transform: scale(1.02);
+}
+
+/* TEXT */
+.letter p {
+    text-align: center;
+    line-height: 1.7;
+}
+
+/* BUTTON */
+button {
+    padding: 12px 25px;
+    font-size: clamp(14px, 2.5vw, 16px);
+    background: mediumpurple;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: rebeccapurple;
+}
+
+/* HEART */
+.heart {
+    font-size: clamp(22px, 5vw, 28px);
+    color: #a020f0;
+    animation: beat 1s infinite;
+}
+
+@keyframes beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* FOOTER */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(147, 112, 219, 0.85);
+    color: white;
+}
+
+/* SURPRISE */
+#surpriseSection {
+    display: none;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+#surpriseSection.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 📱 EXTRA MOBILE FIX */
+@media (max-width: 500px) {
+    .slide img {
+        height: 220px;
+    }
+
+    .letter {
+        padding: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Happy Birthday, My Love 💜</h1>
+    <p>You make my world magical every day ✨</p>
+</header>
+
+<!-- SLIDESHOW -->
+<section>
+    <h2>📸 Our Memories</h2>
+
+    <div class="slideshow-container">
+
+        <div class="slide active">
+            <img src="photo19.JPG">
+        </div>
+
+        <div class="slide">
+            <img src="photo2.jpg">
+        </div>
+
+        <div class="slide">
+            <img src="photo15.JPG">
+        </div>
+
+        <div class="slide">
+            <img src="photo27.JPG">
+        </div>
+
+    </div>
+</section>
+
+<!-- LETTER -->
+<section>
+    <h2>💌 A Letter for You</h2>
+    <div class="letter" onclick="showSurprise()">
+        <p>
+            Happy Birthday, my love. 🎂<br><br>
+            From the moment you came into my life, everything became more beautiful.
+            Your smile, your laughter, and your love mean everything to me.<br><br>
+            I’m so grateful for every moment we share, and I can’t wait to create more memories with you.
+            You deserve all the happiness in the world today and always.<br><br>
+            I love you more than words can express.
+        </p>
+    </div>
+</section>
+
+<!-- SURPRISE -->
+<section id="surpriseSection">
+    <h2>🎉 Surprise 🎉</h2>
+
+    <p class="heart">💜 💜 💜</p>
+
+    <button onclick="goToSurprise()">Click Me 💜</button>
+</section>
+
+<footer>
+    <p>Made with love 💜</p>
+</footer>
+
+<script>
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+
+function showSlides() {
+    slides.forEach(slide => slide.classList.remove("active"));
+
+    index++;
+    if (index > slides.length) index = 1;
+
+    slides[index - 1].classList.add("active");
+
+    setTimeout(showSlides, 3000);
+}
+
+showSlides();
+
+function showSurprise() {
+    const surprise = document.getElementById("surpriseSection");
+    surprise.classList.add("show");
+    surprise.scrollIntoView({ behavior: "smooth" });
+}
+
+function goToSurprise() {
+    window.location.href = "surprise.html";
+}
+</script>
+
+</body>
+</html>
